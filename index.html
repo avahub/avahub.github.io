@@ -88,9 +88,11 @@
             <div class="uk-placeholder uk-margin-large-top uk-container-center ">
                 <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> Select some files
                 by clicking/touching this box
-                <input id="upload-select" type="file">
+                <input id="upload-select" type="file" multiple>
             </div>
         </div>.
+
+        <output id="list"></output>
 
 
         <div id="progressbar" class="uk-progress uk-hidden uk-margin-large-top">
@@ -98,6 +100,20 @@
 </div>
 </div>
 <script>
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    };
+
     $(function () {
         var progressbar = $("#progressbar"),
             bar = progressbar.find('.uk-progress-bar'),
@@ -114,10 +130,10 @@
                 },
                 allcomplete: function (response) {
                     bar.css("width", "100%").text("100%");
-                    alert("Upload Completed")
                 }
             };
         var select = UIkit.uploadSelect($("#upload-select"), settings);
+        document.getElementById('upload-select').addEventListener('change', handleFileSelect, false);
     });
 </script>
 </body>
