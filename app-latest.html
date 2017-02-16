@@ -1,0 +1,301 @@
+<html>
+
+<head>
+    <title>app</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500,400,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: white;
+        }
+        
+        .question {
+            position: relative;
+            width: 100%;
+            background-color: antiquewhite;
+            text-align: center;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            font-size: 25px;
+        }
+        
+        .content {
+            position: absolute;
+            width: 40%;
+            height: 40%;
+            top: 10%;
+            left: 30%;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .done {
+            position: relative;
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            font-size: 25px;
+        }
+        
+        .bg-primary {
+            background: #2196F3;
+            color: #fff;
+        }
+        
+        .bg-accented {
+            background: #FF4081;
+            color: #fff;
+        }
+        /* MAD-BUTTONS (demo) */
+        
+        [class*=mad-button-] {
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            white-space: nowrap;
+            vertical-align: middle;
+            font-family: "Roboto", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 0;
+            outline: 0;
+            background: red;
+            transition: 0.3s;
+            cursor: pointer;
+            color: white;
+        }
+        
+        [class*=mad-button-] {
+            vertical-align: middle;
+            padding: 0;
+        }
+        
+        .mad-button-raised {
+            height: 36px;
+            padding: 0px 16px;
+            line-height: 36px;
+            border-radius: 2px;
+            box-shadow: /*amb*/
+            0 0 2px rgba(0, 0, 0, 0.15), /*key*/
+            0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+        
+        .mad-button-raised:hover {
+            box-shadow: /*amb*/
+            0 0 2px rgba(0, 0, 0, 0.13), /*key*/
+            0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mad-button-action {
+            width: 56px;
+            height: 56px;
+            padding: 16px 0;
+            border-radius: 32px;
+            box-shadow: /*amb*/
+            0 0 2px rgba(0, 0, 0, 0.13), /*key*/
+            0 5px 7px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mad-button-action:hover {
+            box-shadow: /*amb*/
+            0 0 2px rgba(0, 0, 0, 0.11), /*key*/
+            0 6px 9px rgba(0, 0, 0, 0.18);
+        }
+        /* MAD-RIPPLE EFFECT */
+        
+        .ripple {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: hidden;
+            -webkit-transform: translateZ(0);
+            /* to contain zoomed ripple */
+            transform: translateZ(0);
+            border-radius: inherit;
+            /* inherit from parent (rounded buttons etc) */
+            pointer-events: none;
+            /* allow user interaction */
+            animation: ripple-shadow 0.4s forwards;
+            -webkit-animation: ripple-shadow 0.4s forwards;
+        }
+        
+        .rippleWave {
+            backface-visibility: hidden;
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0.7);
+            -webkit-transform: scale(0.7);
+            background: rgba(255, 255, 255, 1);
+            opacity: 0.45;
+            animation: ripple 2s forwards;
+            -webkit-animation: ripple 2s forwards;
+        }
+        
+        @keyframes ripple-shadow {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+            }
+            20% {
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+            }
+        }
+        
+        @-webkit-keyframes ripple-shadow {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+            }
+            20% {
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0.0);
+            }
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(24);
+                opacity: 0;
+            }
+        }
+        
+        @-webkit-keyframes ripple {
+            to {
+                -webkit-transform: scale(24);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        var data = [{ "Q": "q1", "A": "A1" }, { "Q": "q2", "A": "A2" }, { "Q": "q3", "A": "A3" }, { "Q": "q4", "A": "A4" }, { "Q": "q5", "A": "A5" }];
+        var alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+        var correct = 0;
+        var temp = 'a';
+
+        function cleanUp(i) {
+            $('#id' + (i)).hide();
+            temp = $("input[name=radioName" + i + "]:checked").val();
+            if (temp === undefined) { temp = "not selected"; }
+            $('#id' + (i)).append("<p>you choose: " + temp + "</p>");
+            $('#id' + (i)).append("<p>correct answer: " + data[i].A + "</p>");
+            $('#id' + (i) + '>#form' + (i)).remove();
+        }
+
+        function next(i) {
+            if ($("input[name=radioName" + i + "]:checked").val() == data[i].A) { correct += 1; }
+            cleanUp(i);
+            if (i >= data.length - 1) {
+                $('.content').prepend('<div class="done">');
+                $('.done').append('<div style="height:' + (40 * correct) + 'px; background-color:green; width:40px;  margin-left: 50px; float:left;"></div>');
+                $('.done').append('<div style="height:' + (40 * data.length) + 'px; background-color:green; width:40px; margin-left: 50px; float:left;"></div>');
+                $('.done').append('<p style="clear:both">correct=' + correct + '</p>');
+                $('.done').append('</div>');
+                $("<br>").insertAfter('.done');
+                $(".question").each(function (index) {
+                    $("<br>").insertAfter('#id' + (index));
+                });
+                $('.done').hide();
+                $('.done').addClass("bg-primary");
+                $('.done').fadeIn("slow");
+                $('#id0').fadeIn("slow");
+                $('#id1').fadeIn("slow");
+                $('#id2').fadeIn("slow");
+                $('#id3').fadeIn("slow");
+                $('#id4').fadeIn("slow");
+            } else {
+                $('#id' + (i + 1)).fadeIn("slow");
+            }
+        }
+
+        function init() {
+            $('#id0').fadeIn("slow");
+        }
+
+        $(document).ready(function () {
+            $.each(data, function (i, item) {
+                $('.content').append("<div id='id" + (i) + "' class='question' data-ripple='rgba(0,0,0, 0.4)'>");
+                $('#id' + (i)).append("<p>Question: " + item.Q + "</p>");
+                $('#id' + (i)).append('<div id=form' + i + '>');
+                temp = alpha[Math.round(Math.random() * 25)];
+                $('#form' + (i)).append('<input type="radio" name="radioName' + i + '" value=' + temp + ' />' + temp + '<br />');
+                $('#form' + (i)).append('<input type="radio" name="radioName' + i + '" value=' + item.A + ' />' + item.A + '<br />');
+                temp = alpha[Math.round(Math.random() * 25)];
+                $('#form' + (i)).append('<input type="radio" name="radioName' + i + '" value=' + temp + ' />' + temp + '<br />');
+                if (i == data.length - 1) { $('#form' + (i)).append("<br><br><button data-ripple id='idb" + (i) + "' onclick=next(" + i + ")>submit</button>"); }
+                else { $('#form' + (i)).append("<br><br><button data-ripple id='idb" + (i) + "' onclick=next(" + i + ")>next</button>"); }
+                $('#idb' + (i)).addClass("mad-button-raised");
+                $('#idb' + (i)).addClass("bg-primary");
+                $('#form' + (i)).append('</div>');
+                $('#id' + (i)).append("</div>");
+                $('#id' + (i)).hide();
+                $('#id' + (i)).addClass("bg-primary");
+            });
+            init();
+        });
+
+        $(document).ready(function () {
+            jQuery(function ($) {
+
+                // MAD-RIPPLE // (jQ+CSS)
+                $(document).on("mousedown", "[data-ripple]", function (e) {
+
+                    var $self = $(this);
+
+                    if ($self.is(".btn-disabled")) {
+                        return;
+                    }
+                    if ($self.closest("[data-ripple]")) {
+                        e.stopPropagation();
+                    }
+
+                    var initPos = $self.css("position"),
+                        offs = $self.offset(),
+                        x = e.pageX - offs.left,
+                        y = e.pageY - offs.top,
+                        dia = Math.min(this.offsetHeight, this.offsetWidth, 100), // start diameter
+                        $ripple = $('<div/>', { class: "ripple", appendTo: $self });
+
+                    if (!initPos || initPos === "static") {
+                        $self.css({ position: "relative" });
+                    }
+
+                    $('<div/>', {
+                        class: "rippleWave",
+                        css: {
+                            background: $self.data("ripple"),
+                            width: dia,
+                            height: dia,
+                            left: x - (dia / 2),
+                            top: y - (dia / 2),
+                        },
+                        appendTo: $ripple,
+                        one: {
+                            animationend: function () {
+                                $ripple.remove();
+                            }
+                        }
+                    });
+                });
+
+            });
+        });
+    </script>
+
+    <div class="content"></div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style>
+    body{
+        background-color: lightseagreen;
+    }
+    .container1{
+position:relative;
+top:10%;
+left:38%;
+width:24%;
+height:80%;
+background-color: white;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 10px;
+z-index: 10;
+    }
+    .container2{
+position:relative;
+top:10%;
+left:38%;
+width:24%;
+height:80%;
+background-color: white;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 10px;
+z-index: 10;
+    }
+        .upper{
+position:relative;
+width:100%;
+height:10%;
+background-color: white;
+border-bottom: 2px solid lightblue;
+border-radius: 10px 10px 0px 0px;
+    }
+            .text{
+position:relative;
+width:100%;
+height:15%;
+background-color: lightcyan;
+border-bottom: 2px solid lightblue;
+    }
+                .numpad{
+position:relative;
+width:100%;
+height:50%;
+background-color: white;
+    }
+                .call{
+position:relative;
+width:100%;
+height:10%;
+background-color: blueviolet;
+    }
+                    .call2{
+position:relative;
+width:100%;
+height:10%;
+background-color: red;
+    }
+                    .switcher1{
+position:absolute;
+top:15%;
+left:62%;
+width:3%;
+height:8%;
+background-color: dodgerblue;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 0px 10px 10px 0px;
+    }
+    .switcher2{
+position:absolute;
+top:25%;
+left:62%;
+width:3%;
+height:8%;
+background-color: dodgerblue;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 0px 10px 10px 0px;
+    }
+    .not{
+        display: none;
+    }
+    </style>
+<script>
+    $(document).ready(function () {
+        $(".container2").hide();
+        $(".container2").removeClass("not");
+
+        $('.switcher1').click(function (e) {
+            $('.container1').slideDown(1500);
+            $('.container2').hide();
+        });
+        $('.switcher2').click(function (e) {
+            $('.container1').hide();
+            $('.container2').slideDown("slow");
+        });
+    });
+</script>
+</head>
+
+<body>
+    <div class="container1">
+        <div class="upper"></div>
+        <div class="text"></div>
+        <div class="numpad"></div>
+        <div class="call"></div>
+        <div class="info"></div>
+    </div>
+    <div class="container2 not">
+        <div class="upper"></div>
+        <div class="text"></div>
+        <div class="numpad"></div>
+        <div class="call2"></div>
+        <div class="info"></div>
+    </div>
+    <div class="switcher1"></div>
+    <div class="switcher2"></div>
+</body>
+</html
