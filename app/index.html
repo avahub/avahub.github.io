@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>$</title>
+
+    <style>
+      * {
+        padding: 0px;
+      }
+      div {
+        margin: 5px;
+      }
+      .display-flex-row {
+        display: flex;
+        flex-direction: row;
+      }
+      .display-evenly {
+        justify-content: space-evenly;
+      }
+      #page > * {
+        flex-grow: 1;
+      }
+    </style>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./index.js"></script>
+    <script type="text/babel">
+      const RenderOut = () => {
+        return <div id="render_output"></div>;
+      };
+
+      const CodeEditor = () => {
+        const [markup, setMarkup] = React.useState({
+          __html: editor_default_content_with_tags_replaced,
+        });
+        return (
+          <div
+            id="code_editor"
+            contenteditable="true"
+            onInput={push_to_render}
+            dangerouslySetInnerHTML={markup}
+          ></div>
+        );
+      };
+
+      const FileLabelInput = () => {
+        return (
+          <div id="group-file-label-input">
+            <label for="scriptlet_input">Edit from file</label>
+            <input
+              id="scriptlet_input"
+              type="file"
+              accept=".js"
+              onChange={readFile}
+            />
+          </div>
+        );
+      };
+
+      function Page() {
+        React.useEffect(() => {
+          {
+            appendStyleTag(`.${className}`, {
+              color: "red",
+              "font-size": "24px",
+              "font-weight": "bold",
+            });
+            appendStyleTag(`#code_editor`, {
+              height: "85vh",
+              border: "1px solid #ccc",
+              padding: "10px",
+              "font-family": "monospace",
+              "font-size": "14px",
+              "overflow-y": "scroll",
+              "background-color": "white",
+            });
+
+            window[targetId].classList.add(className);
+            push_to_render({
+              value: editor_default_content_with_tags_replaced,
+            });
+          }
+        }, []);
+
+        return (
+          <div id="page" class="display-flex-row">
+            <div id="group-editor-render">
+              <CodeEditor />
+              <div id="group-render" class="display-flex-row display-evenly">
+                <FileLabelInput />
+              </div>
+            </div>
+            <RenderOut />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(window["root"]).render(<Page />);
+    </script>
+  </body>
+</html>
